@@ -7,10 +7,8 @@ async function getAllUser() {
   return await mongoDataSource.getMongoRepository(User).find();
 }
 
-// async function getUserById(userId: ObjectID) {
 async function getUserById(userId: ObjectID) {
-  const userRepository = mongoDataSource.getMongoRepository(User);
-  return await userRepository.findOneBy({_id: ObjectId(userId)});
+  return await mongoDataSource.getMongoRepository(User).findOneBy({_id: ObjectId(userId)});
 }
 
 async function createUser(user: User) {
