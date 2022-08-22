@@ -1,0 +1,29 @@
+{
+  "name": "mongo-maria-crud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -p tsconfig.json",
+    "start": "node src/index.ts",
+    "dev": "nodemon src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "fastify": "^4.5.2",
+    "fastify-env": "^2.2.0",
+    "fastify-plugin": "^4.2.0",
+    "mongodb": "^3.7.3",
+    "mysql": "^2.18.1",
+    "typeorm": "^0.3.7"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.6",
+    "typescript": "^4.7.4"
+  },
+  "types": "index.d.ts"
+}
