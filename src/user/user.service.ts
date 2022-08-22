@@ -1,23 +1,28 @@
 import { ObjectID } from "typeorm";
+import { ObjectId } from 'mongodb';
 import { mongoDataSource } from "../utils/database";
 import { User } from "./user.entity";
-
 
 async function getAllUser() {
   return await mongoDataSource.getMongoRepository(User).find();
 }
 
-async function getUserById(id: ObjectID) {
-  console.log('HIT SERVICE')
-  return await mongoDataSource.getMongoRepository(User).findOneBy(id);
+// async function getUserById(userId: ObjectID) {
+async function getUserById(userId: ObjectID) {
+  const userRepository = mongoDataSource.getMongoRepository(User);
+  return await userRepository.findOneBy({_id: ObjectId(userId)});
 }
 
 async function createUser(user: User) {
-  return await mongoDataSource.getMongoRepository(User).insertOne(user);
+  return await mongoDataSource.getMongoRepository(User).save(user);
 }
 
-async function updateUserById(id: ObjectID, user: User) {
-  return await mongoDataSource
+async function updateUserById(userId: ObjectID, user: User) {
+  return await mongoDataSource.getMongoRepository(User).findOneAndUpdate({_id: new ObjectId(userId)}, {$set: user} );
+}
+
+async function deleteUserById(userId: ObjectID) {
+  return await mongoDataSource.getMongoRepository(User).findOneAndDelete({_id: new ObjectId(userId)});
 }
 
 export {
@@ -25,5 +30,5 @@ export {
   getUserById,
   createUser,
   updateUserById,
-
+  deleteUserById,
 }
