@@ -1,13 +1,10 @@
-import { DoneFuncWithErrOrRes, FastifyInstance, FastifyRegisterOptions, FastifyReply, FastifyRequest } from "fastify";
+import { DoneFuncWithErrOrRes, FastifyInstance, FastifyRegisterOptions } from "fastify";
 import * as userController from './user.controller';
 
-// function userRouter(fastify: FastifyInstance, opts: FastifyRegisterOptions<unknown>, done: DoneFuncWithErrOrRes) {
 function userRouter(fastify: FastifyInstance, opts: FastifyRegisterOptions<unknown>, done: any) {
-  // fastify.get('/', (request: FastifyRequest, reply: FastifyReply) => {
-  //   return userService.getAllUser();
-  // })
-
-  fastify.post('/', userController.createUser)
+  fastify.get('/', userController.getAllUserController);
+  fastify.get('/:id', userController.getUserById);
+  fastify.post('/', userController.createUserController);
 
   done();
 }
