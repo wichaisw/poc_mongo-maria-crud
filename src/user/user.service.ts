@@ -13,13 +13,17 @@ async function getUserById(id: ObjectID) {
 }
 
 async function createUser(user: User) {
-  return await mongoDataSource.getMongoRepository(User).save(user);
+  return await mongoDataSource.getMongoRepository(User).insertOne(user);
 }
 
-
+async function updateUserById(id: ObjectID, user: User) {
+  return await mongoDataSource
+}
 
 export {
   getAllUser,
   getUserById,
-  createUser
+  createUser,
+  updateUserById,
+
 }
