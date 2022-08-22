@@ -12,16 +12,14 @@ const mongoDataSource: DataSource = new DataSource({
     database: `${env.MONGO_DB_NAME}`,
     username: `${env.MONGO_USERNAME}`,
     password: `${env.MONGO_PASSWORD}`,
-    entities: [
-        User, 
-        "dist/**/*.entity{.ts,.js}",
-        "src/**/*.entity{.ts,.js}",
-        __dirname + '../**/*.entity{.js,.ts}',
-        __dirname + '/**/*.entity{.js,.ts}'
-    ]
+    entities: ["src/**/*.entity{.ts,.js}"]
 })
 
+const mariaDataSource: DataSource = new DataSource({
+    type: "mariadb"
+})
 
 export {
-    mongoDataSource
+    mongoDataSource,
+    mariaDataSource
 }
