@@ -10,8 +10,6 @@ const mongoDataSource: DataSource = new DataSource({
     type: "mongodb",
     url: `${env.MONGO_URL}`,
     database: `${env.MONGO_DB_NAME}`,
-    username: `${env.MONGO_USERNAME}`,
-    password: `${env.MONGO_PASSWORD}`,
     entities: ["src/**/*.entity{.ts,.js}"]
 })
 
