@@ -1,16 +1,17 @@
 import { DataSource } from 'typeorm';
-import * as dotenv from 'dotenv';
-import path from 'path';
-import { User } from '../user/user.entity';
-dotenv.config();
+import 'dotenv/config';
 
 const env: NodeJS.ProcessEnv = process.env;
 
 const mongoDataSource: DataSource = new DataSource({
     type: "mongodb",
-    url: `${env.MONGO_URL}`,
-    database: `${env.MONGO_DB_NAME}`,
+    url: `mongodb+srv://${process.env.MONGO_INITDB_ROOT_USERNAME}:${process.env.MONGO_INITDB_ROOT_PASSWORD}@mongo-crud-db/?retryWrites=true&w=majority`,
+    database: `${process.env.MONGO_INITDB_DATABASE}`,
     entities: ["src/**/*.entity{.ts,.js}"]
+    // type: "mongodb",
+    // url: `${env.MONGO_URL}`,
+    // database: `${env.MONGO_DB_NAME}`,
+    // entities: ["src/**/*.entity{.ts,.js}"]
 })
 
 const mariaDataSource: DataSource = new DataSource({

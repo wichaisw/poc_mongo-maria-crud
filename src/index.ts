@@ -1,11 +1,11 @@
 import fastify from 'fastify';
 import formBody from '@fastify/formbody';
 import "reflect-metadata";
+import 'dotenv/config'
+import cors from '@fastify/cors';
 
 import userRouter from './user/user.router';
-import * as dotenv from 'dotenv';
 import { mongoDataSource } from './utils/database';
-dotenv.config();
 
 const PORT: number = Number(process.env.PORT) || 8080;
 
@@ -23,6 +23,11 @@ const server = fastify()
 
 // middleware & route
 server.register(formBody);
+// TODO set origin properly
+server.register(cors, {
+  origin: '*', 
+  methods: ['GET', 'PUT', 'POST', 'DELETE']
+});
 server.register(userRouter, {prefix: '/users'});
 
 server.listen({ port: PORT }, (err, address) => {

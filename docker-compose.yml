@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+
+  # Backend API
+  poc-api:
+    container_name: backend
+    build: ./
+    command: npm run start
+    working_dir: /usr/src/mongo-maria-poc-api
+    # network_mode: "host"    
+    ports:
+      - "8080:8080"
+    environment:   # TODO docker secret
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGO_DB_NAME}
+      - MARIADB_ROOT_PASSWORD=placeholder
+      - MARIADB_RANDOM_ROOT_PASSWORD=placeholder
+      - MARIADB_USER=placeholder
+      - MARIADB_PASSWORD=placeholder
+      - MARIADB_DATABASE=maric-crud-poc
+    volumes:
+      - ./:/usr/src/mongo-maria-poc-api
+    networks:
+    - poc-site
+    
+  # Mongo Database
+  mongo-crud-db:
+    container_name: mongo-crud
+    image: mongo:3.6.23
+    ports:
+      - 27017:27017
+    volumes:
+      - db-data:/usr/lib/mongo/data
+    restart: always
+    networks:
+      - poc-site
+  
+  # Maria Database
+  maria-crud-db:
+    container_name: maria-crud
+    image: mariadb
+    ports:
+      - 3306:3306
+    volumes:
+      - db-data:/usr/lib/maria/data
+    restart: always
+    networks:
+      - poc-site
+
+networks:
+  poc-site:
+
+volumes:
+  db-data:
