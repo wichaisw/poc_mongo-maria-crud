@@ -1,4 +1,4 @@
-import { Entity, ObjectID, ObjectIdColumn, Column, BaseEntity, PrimaryGeneratedColumn } from "typeorm"
+import { Entity, ObjectID, ObjectIdColumn, Column, BaseEntity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm"
 
 @Entity({ name: 'users', database: "mongo-crud-poc" })
 export class User extends BaseEntity {
@@ -10,4 +10,10 @@ export class User extends BaseEntity {
 
     @Column()
     lastName!: string
+
+    @CreateDateColumn()
+    createdAt!: Date;
+    
+    @UpdateDateColumn()
+    updatedAt!: Date;
 }

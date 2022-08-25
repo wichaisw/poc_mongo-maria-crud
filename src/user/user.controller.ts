@@ -1,17 +1,16 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { request } from "http";
 import { ObjectID } from "typeorm";
 import { User } from "./user.entity";
 import * as userService from './user.service';
 
 const getAllUserController = async(request: FastifyRequest, reply: FastifyReply): Promise<User[]> => {
-  const users = await userService.getAllUser();
+  const users: User[] = await userService.getAllUser();
   return reply.status(200).send(users);
 }
 
-const getUserByIdController = async(request: FastifyRequest, reply: FastifyReply): Promise<User | void> => {
+const getUserByIdController = async(request: FastifyRequest, reply: FastifyReply): Promise<User | null> => {
   const userObjectId: ObjectID = (<User>request.params).id;
-  const user = await userService.getUserById(userObjectId)
+  const user: User | null = await userService.getUserById(userObjectId)
   return reply.status(200).send(user);
 } 
 
@@ -21,9 +20,11 @@ const createUserController = async(request: FastifyRequest, reply: FastifyReply)
   newUser.firstName = firstName;
   newUser.lastName = lastName;
   
-  const user = await userService.createUser(newUser);
+  const user: User = await userService.createUser(newUser);
 
   return reply.status(201).send(user);
+  // const userDto = new UserDto(user.firstName, user.lastName);
+  // return reply.status(201).send(userDto);
 }
 
 const updateUserController = async(request: FastifyRequest, reply: FastifyReply): Promise<User> => {
@@ -33,7 +34,7 @@ const updateUserController = async(request: FastifyRequest, reply: FastifyReply)
   updatedUser.firstName = firstName;
   updatedUser.lastName = lastName;
 
-  const user = await userService.updateUserById(userObjectId, updatedUser);
+  const user: User = await (await userService.updateUserById(userObjectId, updatedUser)).value;
 
   return reply.status(200).send(user);
 }
