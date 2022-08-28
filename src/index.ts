@@ -1,7 +1,9 @@
-import fastify, { FastifyReply, FastifyRequest } from 'fastify';
+import fastify from 'fastify';
 import "reflect-metadata";
+import formBodyPlugin from '@fastify/formbody';
 
 import userRouter from './user/user.router';
+import postRouter from './post/post.router';
 import * as dotenv from 'dotenv';
 import { mongoDataSource } from './utils/database';
 dotenv.config();
@@ -19,7 +21,9 @@ mongoDataSource
 
 const server = fastify()
 
+server.register(formBodyPlugin); 
 server.register(userRouter, {prefix: '/users'});
+server.register(postRouter, {prefix: '/posts'});
 
 server.listen({ port: PORT, host: '0.0.0.0' }, (err, address) => {
   if (err) {
