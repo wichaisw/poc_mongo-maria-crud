@@ -2,8 +2,8 @@ import fastify from 'fastify';
 import "reflect-metadata";
 import formBodyPlugin from '@fastify/formbody';
 
-import userRouter from './user/user.router';
-import postRouter from './post/post.router';
+import userRouter from './domains/user/user.router';
+import postRouter from './domains/post/post.router';
 import * as dotenv from 'dotenv';
 import { mariaDataSource, mongoDataSource } from './utils/database';
 dotenv.config();

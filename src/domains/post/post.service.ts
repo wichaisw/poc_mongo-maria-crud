@@ -1,6 +1,6 @@
 import { ObjectID } from "typeorm";
 import { ObjectId } from 'mongodb';
-import { mongoDataSource } from "../utils/database";
+import { mongoDataSource } from "../../utils/database";
 import { Post } from "./post.entity";
 
 async function getAllPost() {

@@ -1,4 +1,4 @@
-import { mariaDataSource } from "../utils/database";
+import { mariaDataSource } from "../../utils/database";
 import { User } from "./user.entity";
 
 async function getAllUser() {
