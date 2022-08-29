@@ -7,19 +7,13 @@ services:
     container_name: backend
     build: ./
     command: npm run start
-    working_dir: /usr/src/mongo-maria-poc-api
-    # network_mode: "host"    
+    working_dir: /usr/src/mongo-maria-poc-api 
     ports:
       - "8080:8080"
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
-      - MONGO_INITDB_DATABASE=${MONGO_DB_NAME}
-      - MARIADB_ROOT_PASSWORD=placeholder
-      - MARIADB_RANDOM_ROOT_PASSWORD=placeholder
-      - MARIADB_USER=placeholder
-      - MARIADB_PASSWORD=placeholder
-      - MARIADB_DATABASE=maric-crud-poc
+      - MONGO_INITDB_ROOT_USERNAME=${PRD_MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${PRD_MONGO_PASSWORD}
+      - MONGO_INITDB_DATABASE=${PRD_MONGO_DB_NAME}
     env_file:
       - .env
     volumes:
@@ -36,14 +30,14 @@ services:
     volumes:
       - db-data:/usr/lib/mongo/data
     restart: always
-    environment:   # TODO docker secret
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
-      - MONGO_INITDB_DATABASE=${MONGO_DB_NAME}
-    env_file:
-      - .env
     networks:
       - poc-site
+    environment:   # TODO docker secret
+      - MONGO_INITDB_ROOT_USERNAME=${PRD_MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${PRD_MONGO_PASSWORD}
+      - MONGO_INITDB_DATABASE=${PRD_MONGO_DB_NAME}
+    env_file:
+      - .env
   
   # Maria Database
   maria-crud-db:
@@ -56,6 +50,10 @@ services:
     restart: always
     networks:
       - poc-site
+    environment:
+      - MARIADB_ROOT_PASSWORD=${PRD_MARIA_PASSWORD}
+    env_file:
+      - .env
 
 networks:
   poc-site:
