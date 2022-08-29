@@ -34,7 +34,7 @@ const updatePostController = async(request: FastifyRequest, reply: FastifyReply)
   updatedPost.message = message;
   updatedPost.like = like;
 
-  const post: Post = await (await postService.updatePostById(postObjectId, updatedPost)).value;
+  const post: Post = await postService.updatePostById(postObjectId, updatedPost);
 
   return reply.status(200).send(post);
 }

@@ -16,7 +16,11 @@ async function createPost(post: Post) {
 }
 
 async function updatePostById(postId: ObjectID, post: Post) {
-  return await mongoDataSource.getMongoRepository(Post).findOneAndUpdate({_id: new ObjectId(postId)}, {$set: post}, {returnOriginal: false});
+  return await(await mongoDataSource.getMongoRepository(Post).findOneAndUpdate(
+      {_id: new ObjectId(postId)}, 
+      {$set: post}, 
+      {returnOriginal: false}
+    )).value;
 }
 
 async function deletePostById(postId: ObjectID) {
