@@ -1,4 +1,4 @@
-import { DoneFuncWithErrOrRes, FastifyInstance, FastifyRegisterOptions } from "fastify";
+import { FastifyInstance, FastifyRegisterOptions } from "fastify";
 import * as userController from './user.controller';
 
 function userRouter(fastify: FastifyInstance, opts: FastifyRegisterOptions<unknown>, done: any) {

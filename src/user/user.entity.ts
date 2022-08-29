@@ -1,19 +1,19 @@
-import { Entity, ObjectID, ObjectIdColumn, Column, BaseEntity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm"
+import { Entity, Column, BaseEntity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, } from "typeorm"
 
-@Entity({ name: 'users', database: "mongo-crud-poc" })
+@Entity({ name: 'users', database: "maria_crud_poc" })
 export class User extends BaseEntity {
-    @ObjectIdColumn()
-    id!: ObjectID;
+    @PrimaryGeneratedColumn({type: 'int'})
+    id!: number;
 
-    @Column()
+    @Column({name: 'first_name', type: 'varchar', width: 255})
     firstName!: string;
 
-    @Column()
+    @Column({name: 'last_name', type: 'varchar', width: 255})
     lastName!: string
 
-    @CreateDateColumn()
+    @CreateDateColumn({name: 'created_at', type: 'datetime'})
     createdAt!: Date;
     
-    @UpdateDateColumn()
+    @UpdateDateColumn({name: 'updated_at', type: 'datetime'})
     updatedAt!: Date;
 }

@@ -1,26 +1,25 @@
-import { ObjectID } from "typeorm";
-import { ObjectId } from 'mongodb';
-import { mongoDataSource } from "../utils/database";
+import { mariaDataSource } from "../utils/database";
 import { User } from "./user.entity";
 
 async function getAllUser() {
-  return await mongoDataSource.getMongoRepository(User).find();
+  return await mariaDataSource.getRepository(User).find();
 }
 
-async function getUserById(userId: ObjectID) {
-  return await mongoDataSource.getMongoRepository(User).findOneBy({_id: ObjectId(userId)});
+async function getUserById(userId: number) {
+  return await mariaDataSource.getRepository(User).findOneBy({id: userId});
 }
 
 async function createUser(user: User) {
-  return await mongoDataSource.getMongoRepository(User).save(user);
+  return await mariaDataSource.getRepository(User).save(user);
 }
 
-async function updateUserById(userId: ObjectID, user: User) {
-  return await mongoDataSource.getMongoRepository(User).findOneAndUpdate({_id: new ObjectId(userId)}, {$set: user} );
+async function updateUserById(userId: number, user: User) {
+  user.id = userId;
+  return await mariaDataSource.getRepository(User).save(user);
 }
 
-async function deleteUserById(userId: ObjectID) {
-  return await mongoDataSource.getMongoRepository(User).findOneAndDelete({_id: new ObjectId(userId)});
+async function deleteUserById(userId: number) {
+  return await mariaDataSource.getRepository(User).delete(userId);
 }
 
 export {

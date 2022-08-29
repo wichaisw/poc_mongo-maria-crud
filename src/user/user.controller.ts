@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { ObjectID } from "typeorm";
+import { ObjectID, ObjectLiteral } from "typeorm";
 import { User } from "./user.entity";
 import * as userService from './user.service';
 
@@ -9,8 +9,8 @@ const getAllUserController = async(request: FastifyRequest, reply: FastifyReply)
 }
 
 const getUserByIdController = async(request: FastifyRequest, reply: FastifyReply): Promise<User | null> => {
-  const userObjectId: ObjectID = (<User>request.params).id;
-  const user: User | null = await userService.getUserById(userObjectId)
+  const userId: number = Number((<User>request.params).id);
+  const user: User | null = await userService.getUserById(userId)
   return reply.status(200).send(user);
 } 
 
@@ -29,20 +29,20 @@ const createUserController = async(request: FastifyRequest, reply: FastifyReply)
 
 const updateUserController = async(request: FastifyRequest, reply: FastifyReply): Promise<User> => {
   const { firstName, lastName } = request.body as User;
-  const userObjectId: ObjectID = (<User>request.params).id;
+  const userId: number = Number((<User>request.params).id);
   const updatedUser = new User();
   updatedUser.firstName = firstName;
   updatedUser.lastName = lastName;
 
-  const user: User = await (await userService.updateUserById(userObjectId, updatedUser)).value;
-
+  const user: any = await userService.updateUserById(userId, updatedUser);
+  
   return reply.status(200).send(user);
 }
 
 const deleteUserController = async(request: FastifyRequest, reply: FastifyReply): Promise<void> => {
-  const userObjectId: ObjectID = (<User>request.params).id;
+  const userId: number = Number((<User>request.params).id);
 
-  await userService.deleteUserById(userObjectId);
+  await userService.deleteUserById(userId);
 
   return reply.status(204).send();
 }
